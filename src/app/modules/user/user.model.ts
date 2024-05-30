@@ -1,94 +1,40 @@
-import mongoose from 'mongoose'
-import { IStudent, Guardian, LocalGuardian } from './user.interface'
+import { model, Schema } from 'mongoose'
+import { TProfile, TUser } from './user.type'
 
-const guardianSchema = new mongoose.Schema<Guardian>({
-  fathersName: {
+const profileSchema = new Schema<TProfile>({
+  avatar: {
     type: String,
-    required: true,
   },
-  fatherOccupation: {
+  bio: {
     type: String,
-    required: true,
-  },
-  fatherContactNo: {
-    type: String,
-    required: true,
-  },
-  motherName: {
-    type: String,
-    required: true,
-  },
-  motherOccupation: {
-    type: String,
-    required: true,
-  },
-  motherContactNo: {
-    type: String,
-    required: true,
   },
 })
 
-const localGuardianSchema = new mongoose.Schema<LocalGuardian>({
-  name: {
-    type: String,
-    required: true,
-  },
-  occupation: {
-    type: String,
-    required: true,
-  },
-  contactNo: {
-    type: String,
-    required: true,
-  },
-  address: {
-    type: String,
-    required: true,
-  },
-})
-
-const studentSchema = new mongoose.Schema<IStudent>(
+const userSchema = new Schema<TUser>(
   {
-    id: { type: String },
-    name: {
-      firstName: { type: String, required: true },
-      middleName: { type: String },
-      lastName: { type: String, required: true },
-    },
-    email: { type: String, unique: true, required: true },
-    contactNo: { type: String, required: true },
-    gender: {
+    username: {
       type: String,
-      enum: ['male', 'female', 'other'],
       required: true,
+      unique: true,
     },
-    bloodGroup: {
-      type: String,
-      enum: ['A+', 'A-', 'B+', 'B-', 'AB+', 'AB-', 'O+', 'O-'],
-    },
-
-    emergencyContactNo: { type: String, required: true },
-    dateOfBirth: {
+    email: {
       type: String,
       required: true,
     },
-    presentAddress: { type: String, required: true },
-    permanentAddress: { type: String, required: true },
-    localGuardian: {
-      type: localGuardianSchema,
-      required: true,
-    },
-    guardian: {
-      type: guardianSchema,
-      required: true,
-    },
-    profileImage: { type: String },
-    isActive: {
+    password: {
       type: String,
-      enum: ['active', 'inactive'],
+      required: true,
+    },
+    role: {
+      type: String,
+      enum: ['admin', 'author', 'reader'],
+      default: 'reader',
+    },
+    profile: {
+      type: profileSchema,
     },
   },
   { timestamps: true },
 )
 
-export const Student = mongoose.model<IStudent>('Student', studentSchema)
+export const User = model<TUser>('User', userSchema)
