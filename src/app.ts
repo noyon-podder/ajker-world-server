@@ -1,6 +1,5 @@
 import express, { Response, Request, Application } from 'express'
 import cors from 'cors'
-import { UserRoutes } from './app/modules/user/user.route'
 import globalErrorHandler from './app/error/globalErrorHandler'
 import notFoundRoute from './app/error/notFound'
 import router from './app/routes'
