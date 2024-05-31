@@ -1,5 +1,6 @@
 import { model, Schema } from 'mongoose'
 import { TProfile, TUser } from './user.type'
+import AppError from '../../error/AppError'
 
 const profileSchema = new Schema<TProfile>({
   avatar: {
@@ -36,5 +37,18 @@ const userSchema = new Schema<TUser>(
   },
   { timestamps: true },
 )
+
+// is not exist user throw error
+userSchema.pre('findOneAndUpdate', async function (next) {
+  const query = this.getQuery()
+
+  const isUserExist = await User.findOne(query)
+
+  if (!isUserExist) {
+    throw new AppError(404, 'User not found!!')
+  }
+
+  next()
+})
 
 export const User = model<TUser>('User', userSchema)
