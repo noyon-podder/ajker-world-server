@@ -42,6 +42,17 @@ const userSchema = new Schema<TUser>(
   { timestamps: true },
 )
 
+// Query Middleware
+userSchema.pre('find', function (next) {
+  this.find({ isDeleted: { $ne: true } })
+  next()
+})
+
+userSchema.pre('findOne', async function (next) {
+  this.find({ isDeleted: { $ne: true } })
+
+  next()
+})
 // is not exist user throw error
 userSchema.pre('findOneAndUpdate', async function (next) {
   const query = this.getQuery()

@@ -33,7 +33,7 @@ const getSingleUser = catchAsync(async (req, res) => {
   sendResponse(res, {
     statusCode: 200,
     success: true,
-    message: 'User Create Successfully!',
+    message: 'Single User Retrieve Successfully!',
     data: result,
   })
 })

@@ -18,9 +18,13 @@ const getAllUserIntoDB = async () => {
 
 // get single user
 const getSingleUserIntoDB = async (userId: string) => {
-  const result = await User.findById(userId)
+  const userExist = await User.findOne({ _id: userId })
 
-  return result
+  if (!userExist) {
+    throw new AppError(404, 'User not found')
+  }
+
+  return userExist
 }
 
 // single user update
