@@ -27,6 +27,28 @@ const createUserValidationSchema = z.object({
   }),
 })
 
+const updateUserValidationSchema = z.object({
+  body: z.object({
+    password: z
+      .string()
+      .min(8, { message: 'Password must be at least 8 characters long' })
+      .max(18, { message: 'Password cannot exceed 18 characters' })
+      .regex(/[A-Z]/, {
+        message: 'Password must contain at least one uppercase letter',
+      })
+      .optional(),
+    email: z.string().email({ message: 'Invalid email address' }).optional(),
+    profile: z
+      .object({
+        bio: z.string().optional(),
+        avatar: z.string().url().optional(),
+      })
+      .optional(),
+    role: z.enum(['admin', 'author', 'reader']).default('reader').optional(),
+  }),
+})
+
 export const UserValidation = {
   createUserValidationSchema,
+  updateUserValidationSchema,
 }

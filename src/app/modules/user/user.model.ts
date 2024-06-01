@@ -34,6 +34,10 @@ const userSchema = new Schema<TUser>(
     profile: {
       type: profileSchema,
     },
+    isDeleted: {
+      type: Boolean,
+      default: false,
+    },
   },
   { timestamps: true },
 )

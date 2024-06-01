@@ -52,9 +52,22 @@ const singleUserUpdate = catchAsync(async (req, res) => {
   })
 })
 
+// user soft delete
+const userDeleted = catchAsync(async (req, res) => {
+  const result = await UserServices.userDeleteIntoDB(req.params.userId)
+
+  sendResponse(res, {
+    statusCode: 200,
+    success: true,
+    message: 'User Delete Successfully!',
+    data: result,
+  })
+})
+
 export const UserControllers = {
   createUser,
   getAllUser,
   getSingleUser,
   singleUserUpdate,
+  userDeleted,
 }

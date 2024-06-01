@@ -9,4 +9,5 @@ export type TUser = {
   password: string
   role: 'admin' | 'author' | 'reader'
   profile?: TProfile
+  isDeleted: boolean
 }
