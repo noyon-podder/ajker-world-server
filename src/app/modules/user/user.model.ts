@@ -66,4 +66,11 @@ userSchema.pre('findOneAndUpdate', async function (next) {
   next()
 })
 
+// Add a post hook to remove 'isDeleted' field
+userSchema.set('toJSON', {
+  transform: function (doc: TUser, ret: any) {
+    delete ret.isDeleted
+    return ret
+  },
+})
 export const User = model<TUser>('User', userSchema)
