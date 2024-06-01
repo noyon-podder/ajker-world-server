@@ -45,9 +45,21 @@ const singleUserUpdateIntoDB = async (
   return result
 }
 
+// soft delete user
+const userDeleteIntoDB = async (userId: string) => {
+  const result = await User.findOneAndUpdate(
+    { _id: userId },
+    { isDeleted: true },
+    { new: true },
+  )
+
+  return result
+}
+
 export const UserServices = {
   createUserIntoDB,
   getAllUserIntoDB,
   getSingleUserIntoDB,
   singleUserUpdateIntoDB,
+  userDeleteIntoDB,
 }

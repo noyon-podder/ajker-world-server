@@ -15,6 +15,12 @@ router.get('/', UserControllers.getAllUser)
 
 router.get('/:userId', UserControllers.getSingleUser)
 
-router.patch('/:userId', UserControllers.singleUserUpdate)
+router.patch(
+  '/:userId',
+  validator(UserValidation.updateUserValidationSchema),
+  UserControllers.singleUserUpdate,
+)
+
+router.delete('/:userId', UserControllers.userDeleted)
 
 export const UserRoutes = router
